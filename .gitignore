@@ -5,3 +5,5 @@
 /.vscode/settings.json
 /conf.lua
 /assets/
+.envrc
+.direnv
