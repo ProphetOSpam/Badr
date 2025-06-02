@@ -1,5 +1,5 @@
 local component = require 'badr'
-local merge = require 'badr_merge'
+local make_config = require 'make_config'
 
 ---@class badr.button.config : badr.component.config
 ---@field text string?
@@ -14,13 +14,15 @@ local merge = require 'badr_merge'
 ---@field rightPadding number?
 ---@field topPadding number?
 ---@field bottomPadding number?
----@field borderColor [integer, integer, integer]?
+---@field borderColor [integer, integer, integer, integer]?
 ---@field borderWidth number?
 ---@field border boolean?
 ---@field angle number?
 ---@field scale number?
 --- Logic
+---@field onUpdate fun(self: badr.button)?
 ---@field onUpdates fun(self: badr.button)[]?
+---@field onDraw fun(self: badr.button)?
 ---@field onDraws fun(self: badr.button)[]?
 ---@field onClick fun(self: badr.button)?
 ---@field onHover fun(self: badr.button)?
@@ -109,60 +111,57 @@ return function(config)
         disabled = false,
         hoverCalled = false,
         mousePressed = false,
-        onUpdates = {
-            function(self)
-                if love.mouse.isDown(1) then
-                    if self.mousePressed == false and self:isMouseInside() and self.parent.visible then
-                        self.mousePressed = true
-                        if config.onClick then self:onClick() end
-                    end
-                else
-                    self.mousePressed = false
+        onUpdate = function(self)
+            if love.mouse.isDown(1) then
+                if self.mousePressed == false and self:isMouseInside() and self.parent.visible then
+                    self.mousePressed = true
+                    if config.onClick then self:onClick() end
                 end
+            else
+                self.mousePressed = false
             end
-        },
+        end,
         --
-        onDraws = {
-            function(self)
-                if not self.visible then return love.mouse.setCursor() end
-                love.graphics.push()
-                love.graphics.rotate(self.angle)
-                love.graphics.scale(self.scale, self.scale)
-                love.graphics.setFont(font)
-                -- border
-                if self.border then
-                    love.graphics.setColor(self.borderColor)
-                    love.graphics.setLineWidth(self.borderWidth)
-                    love.graphics.rectangle('line', self.x, self.y, self.width, self.height, self.cornerRadius)
-                end
-                --
-                love.graphics.setColor(self.backgroundColor)
-                -- hover
-                if self:isMouseInside() then
-                    if self.onHover and not self.hoverCalled then
-                        self:onHover()
-                        self.hoverCalled = true
-                    end
-                    love.mouse.setCursor(love.mouse.getSystemCursor('hand'))
-                    love.graphics.setColor(self.hoverColor)
-                    self.hovered = true
-                elseif self.hovered then
-                    love.mouse.setCursor()
-                    if self.onMouseExit then
-                        self:onMouseExit()
-                    end
-                    self.hovered = false
-                    self.hoverCalled = false
-                end
-                love.graphics.rectangle('fill', self.x, self.y, self.width, self.height, self.cornerRadius)
-                love.graphics.setColor(self.textColor)
-                love.graphics.printf(self.text, self.x + self.leftPadding, self.y + self.topPadding,
-                    self.width - (self.rightPadding + self.leftPadding), 'center')
-                love.graphics.pop()
+        onDraw = function(self)
+            if not self.visible then return love.mouse.setCursor() end
+            love.graphics.push()
+            love.graphics.rotate(self.angle)
+            love.graphics.scale(self.scale, self.scale)
+            love.graphics.setFont(font)
+            -- border
+            if self.border then
+                love.graphics.setColor(self.borderColor)
+                love.graphics.setLineWidth(self.borderWidth)
+                love.graphics.rectangle('line', self.x, self.y, self.width, self.height, self.cornerRadius)
             end
-        }
+            --
+            love.graphics.setColor(self.backgroundColor)
+            -- hover
+            if self:isMouseInside() then
+                if self.onHover and not self.hoverCalled then
+                    self:onHover()
+                    self.hoverCalled = true
+                end
+                love.mouse.setCursor(love.mouse.getSystemCursor('hand'))
+                love.graphics.setColor(self.hoverColor)
+                self.hovered = true
+            elseif self.hovered then
+                love.mouse.setCursor()
+                if self.onMouseExit then
+                    self:onMouseExit()
+                end
+                self.hovered = false
+                self.hoverCalled = false
+            end
+            love.graphics.rectangle('fill', self.x, self.y, self.width, self.height, self.cornerRadius)
+            love.graphics.setColor(self.textColor)
+            love.graphics.printf(self.text, self.x + self.leftPadding, self.y + self.topPadding,
+                self.width - (self.rightPadding + self.leftPadding), 'center')
+            love.graphics.pop()
+        end
+
     }
 
     ---@type badr.button
-    return component(merge(default, config))
+    return component(make_config(default, config))
 end

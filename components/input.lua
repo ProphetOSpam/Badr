@@ -1,5 +1,5 @@
 local component = require("badr")
-local merge = require("badr_merge")
+local make_config = require("make_config")
 
 ---@class badr.input.handler
 ---@field focus badr.input?
@@ -11,7 +11,9 @@ local inputHandler = {}
 ---@field onTextInput fun(self: badr.input, char: string)?
 ---@field onKeypress fun(self: badr.input, key: string, scancode: integer, isrepeat: boolean)?
 ---@field onSubmit fun(self: badr.input)?
+---@field onUpdate fun(self: badr.input)?
 ---@field onUpdates fun(self: badr.input)[]?
+---@field onDraw fun(self: badr.input)?
 ---@field onDraws fun(self: badr.input)[]?
 
 ---@class badr.input : badr.button
@@ -81,24 +83,22 @@ function inputHandler.input(config)
         disabled = false,
         hoverCalled = false,
         mousePressed = false,
-        onUpdates = {
-            function(self)
-                if love.mouse.isDown(1) then
-                    if
-                        self.mousePressed == false
-                        and self:isMouseInside()
-                        and self.parent.visible
-                    then
-                        self.mousePressed = true
-                        if self.onClick then
-                            self:onClick()
-                        end
+        onUpdate = function(self)
+            if love.mouse.isDown(1) then
+                if
+                    self.mousePressed == false
+                    and self:isMouseInside()
+                    and self.parent.visible
+                then
+                    self.mousePressed = true
+                    if self.onClick then
+                        self:onClick()
                     end
-                else
-                    self.mousePressed = false
                 end
-            end,
-        },
+            else
+                self.mousePressed = false
+            end
+        end,
         onKeypress = function(self, key, scancode, isrepeat)
             if key == "backspace" then
                 self.text = self.text:sub(1, #self.text - 1)
@@ -114,75 +114,74 @@ function inputHandler.input(config)
             self.text = self.text .. char
         end,
         --
-        onDraws = {
-            function(self)
-                if not self.visible then
-                    return love.mouse.setCursor()
-                end
-                love.graphics.push()
-                love.graphics.rotate(self.angle)
-                love.graphics.scale(self.scale, self.scale)
-                love.graphics.setFont(font)
-                -- border
-                if self.border then
-                    love.graphics.setColor(self.borderColor)
-                    love.graphics.setLineWidth(self.borderWidth)
-                    love.graphics.rectangle(
-                        "line",
-                        self.x,
-                        self.y,
-                        self.width,
-                        self.height,
-                        self.cornerRadius
-                    )
-                end
-                --
-                love.graphics.setColor(self.backgroundColor)
-                -- hover
-                if self:isMouseInside() then
-                    if self.onHover and not self.hoverCalled then
-                        --*  onHover return a 'clean up' callback
-                        self.onMouseExit = self.onHover(self)
-                        self.hoverCalled = true
-                    end
-                    love.mouse.setCursor(love.mouse.getSystemCursor("ibeam"))
-                    love.graphics.setColor(self.hoverColor)
-                    self.hovered = true
-                elseif self.hovered then
-                    love.mouse.setCursor()
-                    if self.onMouseExit then
-                        self:onMouseExit()
-                    end
-                    self.hovered = false
-                    self.hoverCalled = false
-                end
-                if inputHandler.focus == self then
-                    love.graphics.setColor(self.focusColor)
-                end
+        onDraw = function(self)
+            if not self.visible then
+                return love.mouse.setCursor()
+            end
+            love.graphics.push()
+            love.graphics.rotate(self.angle)
+            love.graphics.scale(self.scale, self.scale)
+            love.graphics.setFont(font)
+            -- border
+            if self.border then
+                love.graphics.setColor(self.borderColor)
+                love.graphics.setLineWidth(self.borderWidth)
                 love.graphics.rectangle(
-                    "fill",
+                    "line",
                     self.x,
                     self.y,
                     self.width,
                     self.height,
                     self.cornerRadius
                 )
-                love.graphics.setColor(self.textColor)
-                love.graphics.printf(
-                    (#self.text ~= 0 or inputHandler.focus == self) and self.text
-                        or self.emptyText,
-                    self.x + self.leftPadding,
-                    self.y + self.topPadding,
-                    self.width - (self.rightPadding + self.leftPadding),
-                    "center"
-                )
-                love.graphics.pop()
-            end,
-        }
+            end
+            --
+            love.graphics.setColor(self.backgroundColor)
+            -- hover
+            if self:isMouseInside() then
+                if self.onHover and not self.hoverCalled then
+                    --*  onHover return a 'clean up' callback
+                    self.onMouseExit = self.onHover(self)
+                    self.hoverCalled = true
+                end
+                love.mouse.setCursor(love.mouse.getSystemCursor("ibeam"))
+                love.graphics.setColor(self.hoverColor)
+                self.hovered = true
+            elseif self.hovered then
+                love.mouse.setCursor()
+                if self.onMouseExit then
+                    self:onMouseExit()
+                end
+                self.hovered = false
+                self.hoverCalled = false
+            end
+            if inputHandler.focus == self then
+                love.graphics.setColor(self.focusColor)
+            end
+            love.graphics.rectangle(
+                "fill",
+                self.x,
+                self.y,
+                self.width,
+                self.height,
+                self.cornerRadius
+            )
+            love.graphics.setColor(self.textColor)
+            love.graphics.printf(
+                (#self.text ~= 0 or inputHandler.focus == self) and self.text
+                or self.emptyText,
+                self.x + self.leftPadding,
+                self.y + self.topPadding,
+                self.width - (self.rightPadding + self.leftPadding),
+                "center"
+            )
+            love.graphics.pop()
+        end,
+
     }
 
     ---@type badr.input
-    return component(merge(default, config))
+    return component(make_config(default, config))
 end
 
 --- Place in `love.keypressed`

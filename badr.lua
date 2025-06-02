@@ -21,8 +21,10 @@
 ---@field gap integer? Defaults to 0
 ---@field column boolean? Display children stacked vertically
 ---@field row boolean? Display children stacked horizontally
----@field onUpdates fun(self: badr.component)[]? Typically only place one function in the list, unless you are making your own components
----@field onDraws fun(self: badr.component)[]? Typically only place one function in the list, unless you are making your own components
+---@field onUpdates fun(self: badr.component)[]? Used internally, set onUpdates instead
+---@field onUpdate fun(self: badr.component)?
+---@field onDraws fun(self: badr.component)[]? Used internally, set onDraws instead
+---@field onDraw fun(self: badr.component)?
 
 --- To append a child component to a parent component, you can use the following
 --- syntax: `parent = parent + child`.
