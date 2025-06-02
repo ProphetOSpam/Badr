@@ -82,7 +82,7 @@ return function(config)
         bottom = config.bottomPadding or 8
     }
 
-    local width = font:getWidth(config.text) + padding.left + padding.right
+    local width = font:getWidth(text) + padding.left + padding.right
     local height = font:getHeight() + padding.top + padding.bottom
 
     ---@type badr.button.config
