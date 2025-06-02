@@ -24,7 +24,6 @@ local menu = component { column = true, gap = 10 }
 
 function love.load()
     love.graphics.setBackgroundColor { 1, 1, 1 }
-    local clicks = 0
 end
 
 function love.draw()
