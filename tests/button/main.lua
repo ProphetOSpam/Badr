@@ -1,5 +1,5 @@
 local component = require 'badr'
-local button    = require 'components.button'
+local button = require 'components.button'
 
 -- Copy to your main.lua file
 
@@ -16,9 +16,9 @@ function love.load()
             width = 200,
             onHover = function()
                 print 'mouse entered'
-                return function()
-                    print('mouse exited')
-                end
+            end,
+            onMouseExit = function()
+                print('mouse exited')
             end
         }
         + button { text = 'Settings', width = 200 }
