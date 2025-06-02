@@ -39,7 +39,7 @@ local newComponent = component {
   y = 10,
   myCustomProp = true,
   customFunction = myCustomLogic(),
-  draw = function(self)
+  onDraw = function(self)
       -- your drawing logic here
       -- don't forget to loop through children to draw them
       if not self.visible then return end
