@@ -1,10 +1,13 @@
+This is a fork of the original project by Nabeel20, [here](https://github.com/Nabeel20/Badr).
+
+
 # Badr 🌕
 
 Badr _(Full moon in Arabic)_ is a easy and enjoyable way to write user interfaces, prioritizing _**developer experience**_, _**composition**_ and _**readability**_ 🌝
 
 ### Usage
 
-Copy [badr.lua](badr.lua) to your project. <br>
+Copy [badr.lua](badr.lua) and [badr_merge.lua](badr_merge.lua) to your project. If you would like to use the default components, copy those as well. <br>
 🌙 For a **_functional_** example see: [example.lua](components/example.lua)
 
 ```lua
