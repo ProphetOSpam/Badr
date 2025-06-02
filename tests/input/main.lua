@@ -8,6 +8,7 @@ local menu = component { column = true, gap = 10 }
         onSubmit = function(self)
             print(self.text)
             self.text = ""
+            inputHandler.focus = nil
         end,
         width = 200,
     }
