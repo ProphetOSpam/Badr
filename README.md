@@ -27,7 +27,7 @@ end
 
 ## Creating a new component
 
-Each component acts as a container for values and includes a `draw` function.There are some default properties (`id (string)`, `x`, `y`, `width`, `height`, `visible`, `parent` and `children`). However, you can pass any additional values to a component and utilize them as needed. To create a custom component, simply override the draw function, for inspiration take a look at [components](components).
+Each component acts as a container for values and includes an `onDraws` field, which is a list of functions. There are some default properties (`id (string)`, `x`, `y`, `width`, `height`, `visible`, `parent` and `children`). However, you can pass any additional values to a component and utilize them as needed. To create a custom component, add a new draw function to the `onDraws` list; for inspiration take a look at [components](components).
 
 ### Basic layout support
 
@@ -73,7 +73,7 @@ To remove a child component from its parent, you can use the following syntax: `
 
 ## Updating a child component
 
-To update a child component, you can directly modify its value using: `child.value = newValue`. For continuous updates, use `:onUpdate()`, and ensure to call component update method.
+To update a child component, you can directly modify its value using: `child.value = newValue`. For continuous updates, add a function to `onUpdates`, and make sure to call component update method. See [components](components) for examples.
 
 ### Retrieving a child component by id
 
@@ -106,7 +106,7 @@ button {
 > [!NOTE]
 > Don't forget to call `:draw()` and `:update()`.
 
-To check if the mouse is within a component, you can use `:isMouseInside()`. Badr uses mouse.isDown() to check for mouse clicks. Feel free to use your own methods when creating your components.<br>
+To check if the mouse is within a component, you can use `:isMouseInside()`. Badr uses `love.mouse.isDown()` to check for mouse clicks. Feel free to use your own methods when creating your components.<br>
 Feedback and ideas appreciated ✨
 
 ## License
