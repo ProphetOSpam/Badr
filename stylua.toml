@@ -1,0 +1,7 @@
+syntax = "LuaJIT"
+call_parentheses = "NoSingleTable"
+indent_type = "Spaces"
+column_width = 88
+
+[sort_requires]
+enabled = true

@@ -157,7 +157,20 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy, kx, ky) end
 ---@param oy? number # Origin offset (y-axis).
 ---@param kx? number # Shearing factor (x-axis).
 ---@param ky? number # Shearing factor (y-axis).
-function love.graphics.drawInstanced(mesh, instancecount, x, y, r, sx, sy, ox, oy, kx, ky) end
+function love.graphics.drawInstanced(
+    mesh,
+    instancecount,
+    x,
+    y,
+    r,
+    sx,
+    sy,
+    ox,
+    oy,
+    kx,
+    ky
+)
+end
 
 ---
 ---Draws a layer of an Array Texture.
@@ -179,7 +192,20 @@ function love.graphics.drawInstanced(mesh, instancecount, x, y, r, sx, sy, ox, o
 ---@param oy? number # Origin offset (y-axis).
 ---@param kx? number # Shearing factor (x-axis).
 ---@param ky? number # Shearing factor (y-axis).
-function love.graphics.drawLayer(texture, layerindex, x, y, r, sx, sy, ox, oy, kx, ky) end
+function love.graphics.drawLayer(
+    texture,
+    layerindex,
+    x,
+    y,
+    r,
+    sx,
+    sy,
+    ox,
+    oy,
+    kx,
+    ky
+)
+end
 
 ---
 ---Draws an ellipse.
@@ -2288,7 +2314,14 @@ function ParticleSystem:setDirection(direction) end
 ---@param dy number # The maximum spawn distance from the emitter along the y-axis for uniform distribution, or the standard deviation along the y-axis for normal distribution.
 ---@param angle? number # The angle in radians of the emission area.
 ---@param directionRelativeToCenter? boolean # True if newly spawned particles will be oriented relative to the center of the emission area, false otherwise.
-function ParticleSystem:setEmissionArea(distribution, dx, dy, angle, directionRelativeToCenter) end
+function ParticleSystem:setEmissionArea(
+    distribution,
+    dx,
+    dy,
+    angle,
+    directionRelativeToCenter
+)
+end
 
 ---
 ---Sets the amount of particles emitted per second.
@@ -2850,7 +2883,20 @@ function SpriteBatch:setDrawRange(start, count) end
 ---@param oy? number # Origin offset (y-axis).
 ---@param kx? number # Shearing factor (x-axis).
 ---@param ky? number # Shearing factor (y-axis).
-function SpriteBatch:setLayer(spriteindex, layerindex, x, y, r, sx, sy, ox, oy, kx, ky) end
+function SpriteBatch:setLayer(
+    spriteindex,
+    layerindex,
+    x,
+    y,
+    r,
+    sx,
+    sy,
+    ox,
+    oy,
+    kx,
+    ky
+)
+end
 
 ---
 ---Sets the texture (Image or Canvas) used for the sprites in the batch, when drawing.
@@ -2912,7 +2958,21 @@ function Text:add(textstring, x, y, angle, sx, sy, ox, oy, kx, ky) end
 ---@param kx? number # Shearing / skew factor (x-axis).
 ---@param ky? number # Shearing / skew factor (y-axis).
 ---@return number index # An index number that can be used with Text:getWidth or Text:getHeight.
-function Text:addf(textstring, wraplimit, align, x, y, angle, sx, sy, ox, oy, kx, ky) end
+function Text:addf(
+    textstring,
+    wraplimit,
+    align,
+    x,
+    y,
+    angle,
+    sx,
+    sy,
+    ox,
+    oy,
+    kx,
+    ky
+)
+end
 
 ---
 ---Clears the contents of the Text object.

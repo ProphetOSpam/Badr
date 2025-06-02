@@ -49,7 +49,7 @@ function inputHandler.input(config)
         left = config.leftPadding or 12,
         right = config.rightPadding or 12,
         top = config.topPadding or 8,
-        bottom = config.bottomPadding or 8
+        bottom = config.bottomPadding or 8,
     }
 
     local width = font:getWidth(text) + padding.left + padding.right
@@ -62,16 +62,16 @@ function inputHandler.input(config)
         height = height,
         font = font,
         -- styles
-        backgroundColor = Hex '#DBE2EF',
-        hoverColor = Hex '#3F72AF',
-        textColor = Hex '#112D4E',
-        focusColor = Hex '#666666',
+        backgroundColor = Hex("#DBE2EF"),
+        hoverColor = Hex("#3F72AF"),
+        textColor = Hex("#112D4E"),
+        focusColor = Hex("#666666"),
         cornerRadius = 4,
         leftPadding = padding.left,
         rightPadding = padding.right,
         topPadding = padding.top,
         bottomPadding = padding.bottom,
-        borderColor = Hex "#FFFFFF",
+        borderColor = Hex("#FFFFFF"),
         borderWidth = 0,
         border = false,
         angle = 0,
@@ -169,7 +169,7 @@ function inputHandler.input(config)
             love.graphics.setColor(self.textColor)
             love.graphics.printf(
                 (#self.text ~= 0 or inputHandler.focus == self) and self.text
-                or self.emptyText,
+                    or self.emptyText,
                 self.x + self.leftPadding,
                 self.y + self.topPadding,
                 self.width - (self.rightPadding + self.leftPadding),
@@ -177,7 +177,6 @@ function inputHandler.input(config)
             )
             love.graphics.pop()
         end,
-
     }
 
     ---@type badr.input

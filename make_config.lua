@@ -19,7 +19,7 @@ local function merge(...)
     ---@type badr.component.config
     local new = {}
 
-    for _, cfg in ipairs{...} do
+    for _, cfg in ipairs { ... } do
         for k, v in pairs(cfg) do
             new[k] = v
         end
@@ -28,7 +28,7 @@ local function merge(...)
     -- Set them to new tables as to not accidentally modify the configs contents
     new.onUpdates = {}
     new.onDraws = {}
-    for _, cfg in ipairs{...} do
+    for _, cfg in ipairs { ... } do
         if cfg.onUpdate then
             new.onUpdates[#new.onUpdates + 1] = cfg.onUpdate
         end

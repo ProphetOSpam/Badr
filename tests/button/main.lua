@@ -1,5 +1,5 @@
-local component = require 'badr'
-local button = require 'components.button'
+local button = require("components.button")
+local component = require("badr")
 
 -- Copy to your main.lua file
 
@@ -8,36 +8,42 @@ local button = require 'components.button'
 local menu
 
 function love.load()
-    love.graphics.setBackgroundColor({ 1, 1, 1 })
+    love.graphics.setBackgroundColor { 1, 1, 1 }
     local clicks = 0
     menu = component { column = true, gap = 10 }
         + button {
-            text = 'New game',
+            text = "New game",
             width = 200,
             onHover = function()
-                print 'mouse entered'
+                print("mouse entered")
             end,
             onMouseExit = function()
-                print('mouse exited')
-            end
+                print("mouse exited")
+            end,
         }
-        + button { text = 'Settings', width = 200 }
-        + button { text = 'Credits', width = 200 }
-        + button { text = 'Quit', width = 200, onClick = function() love.event.quit() end }
+        + button { text = "Settings", width = 200 }
+        + button { text = "Credits", width = 200 }
         + button {
-            text = 'Clicked: 0',
+            text = "Quit",
+            width = 200,
+            onClick = function()
+                love.event.quit()
+            end,
+        }
+        + button {
+            text = "Clicked: 0",
             width = 200,
             onClick = function(self)
                 clicks = clicks + 1
-                self.text = 'Clicked: ' .. clicks
-            end
+                self.text = "Clicked: " .. clicks
+            end,
         }
         + button {
-            text = 'Click to remove',
+            text = "Click to remove",
             onClick = function(self)
                 self.parent = self.parent - self
                 love.mouse.setCursor()
-            end
+            end,
         }
 
     menu:updatePosition(

@@ -1,20 +1,20 @@
-local component = require 'badr'
-local inputHandler = require 'components.input'
+local component = require("badr")
+local inputHandler = require("components.input")
 local input = inputHandler.input
 
 local menu = component { column = true, gap = 10 }
-        + input {
-            emptyText = "I'm empty!",
-            onSubmit = function(self)
-                print(self.text)
-                self.text = ""
-            end,
-            width = 200
-        }
-        + input { text = "Initial text", width = 200 }
+    + input {
+        emptyText = "I'm empty!",
+        onSubmit = function(self)
+            print(self.text)
+            self.text = ""
+        end,
+        width = 200,
+    }
+    + input { text = "Initial text", width = 200 }
 
 function love.load()
-    love.graphics.setBackgroundColor({ 1, 1, 1 })
+    love.graphics.setBackgroundColor { 1, 1, 1 }
     local clicks = 0
 end
 

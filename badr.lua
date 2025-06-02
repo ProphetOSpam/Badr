@@ -80,7 +80,9 @@ function component:new(t)
 end
 
 function component.__add(self, other)
-    if type(other) ~= "table" or other == nil then return end
+    if type(other) ~= "table" or other == nil then
+        return
+    end
 
     other.parent = self
     other.x = self.x + other.x
@@ -88,7 +90,7 @@ function component.__add(self, other)
 
     local childrenSize = { width = 0, hight = 0 }
     for _, child in ipairs(self.children) do
-        childrenSize.width = childrenSize.width + child.width;
+        childrenSize.width = childrenSize.width + child.width
         childrenSize.hight = childrenSize.hight + child.height
     end
 
@@ -100,7 +102,10 @@ function component.__add(self, other)
         if #self.children > 0 then
             other.y = other.y + gap
         end
-        self.height = math.max(self.height, childrenSize.hight + other.height + gap * #self.children)
+        self.height = math.max(
+            self.height,
+            childrenSize.hight + other.height + gap * #self.children
+        )
         self.width = math.max(self.width, other.width)
     end
     if self.row then
@@ -108,7 +113,10 @@ function component.__add(self, other)
         if #self.children > 0 then
             other.x = other.x + gap
         end
-        self.width = math.max(self.width, childrenSize.width + other.width + gap * #self.children)
+        self.width = math.max(
+            self.width,
+            childrenSize.width + other.width + gap * #self.children
+        )
         self.height = math.max(self.height, other.height)
     end
 
@@ -135,7 +143,7 @@ end
 
 -- Returns child with specific id
 function component.__mod(self, id)
-    assert(type(id) == "string", 'Badar; Provided id must be a string.')
+    assert(type(id) == "string", "Badar; Provided id must be a string.")
     for _, child in ipairs(self.children) do
         if child.id == id then
             return child
@@ -147,13 +155,16 @@ end
 --- Badr uses `love.mouse.isDown()` to check for mouse clicks
 function component:isMouseInside()
     local mouseX, mouseY = love.mouse.getPosition()
-    return mouseX >= self.x and mouseX <= self.x + self.width and
-        mouseY >= self.y and
-        mouseY <= self.y + self.height
+    return mouseX >= self.x
+        and mouseX <= self.x + self.width
+        and mouseY >= self.y
+        and mouseY <= self.y + self.height
 end
 
 function component:draw()
-    if not self.visible then return end;
+    if not self.visible then
+        return
+    end
 
     for _, onDraw in ipairs(self.onDraws) do
         onDraw(self)

@@ -103,7 +103,16 @@ function love.physics.newCircleShape(radius) end
 ---@param y2 number # The y position of the second anchor point (world space).
 ---@param collideConnected? boolean # Specifies whether the two bodies should collide with each other.
 ---@return love.DistanceJoint joint # The new distance joint.
-function love.physics.newDistanceJoint(body1, body2, x1, y1, x2, y2, collideConnected) end
+function love.physics.newDistanceJoint(
+    body1,
+    body2,
+    x1,
+    y1,
+    x2,
+    y2,
+    collideConnected
+)
+end
 
 ---
 ---Creates a new EdgeShape.
@@ -232,7 +241,16 @@ function love.physics.newPolygonShape(x1, y1, x2, y2, x3, y3, ...) end
 ---@param ay number # The y coordinate of the axis vector.
 ---@param collideConnected? boolean # Specifies whether the two bodies should collide with each other.
 ---@return love.PrismaticJoint joint # The new prismatic joint.
-function love.physics.newPrismaticJoint(body1, body2, x, y, ax, ay, collideConnected) end
+function love.physics.newPrismaticJoint(
+    body1,
+    body2,
+    x,
+    y,
+    ax,
+    ay,
+    collideConnected
+)
+end
 
 ---
 ---Creates a PulleyJoint to join two bodies to each other and the ground.
@@ -257,7 +275,21 @@ function love.physics.newPrismaticJoint(body1, body2, x, y, ax, ay, collideConne
 ---@param ratio? number # The joint ratio.
 ---@param collideConnected? boolean # Specifies whether the two bodies should collide with each other.
 ---@return love.PulleyJoint joint # The new pulley joint.
-function love.physics.newPulleyJoint(body1, body2, gx1, gy1, gx2, gy2, x1, y1, x2, y2, ratio, collideConnected) end
+function love.physics.newPulleyJoint(
+    body1,
+    body2,
+    gx1,
+    gy1,
+    gx2,
+    gy2,
+    x1,
+    y1,
+    x2,
+    y2,
+    ratio,
+    collideConnected
+)
+end
 
 ---
 ---Shorthand for creating rectangular PolygonShapes.
@@ -305,7 +337,17 @@ function love.physics.newRevoluteJoint(body1, body2, x, y, collideConnected) end
 ---@param maxLength number # The maximum distance for the bodies.
 ---@param collideConnected? boolean # Specifies whether the two bodies should collide with each other.
 ---@return love.RopeJoint joint # The new RopeJoint.
-function love.physics.newRopeJoint(body1, body2, x1, y1, x2, y2, maxLength, collideConnected) end
+function love.physics.newRopeJoint(
+    body1,
+    body2,
+    x1,
+    y1,
+    x2,
+    y2,
+    maxLength,
+    collideConnected
+)
+end
 
 ---
 ---Creates a constraint joint between two bodies. A WeldJoint essentially glues two bodies together. The constraint is a bit soft, however, due to Box2D's iterative solver.
@@ -3108,7 +3150,14 @@ function World:isSleepingAllowed() end
 ---@param bottomRightX number # The x position of the bottom-right point.
 ---@param bottomRightY number # The y position of the bottom-right point.
 ---@param callback function # This function gets passed one argument, the fixture, and should return a boolean. The search will continue if it is true or stop if it is false.
-function World:queryBoundingBox(topLeftX, topLeftY, bottomRightX, bottomRightY, callback) end
+function World:queryBoundingBox(
+    topLeftX,
+    topLeftY,
+    bottomRightX,
+    bottomRightY,
+    callback
+)
+end
 
 ---
 ---Casts a ray and calls a function for each fixtures it intersects.

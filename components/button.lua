@@ -1,5 +1,5 @@
-local component = require 'badr'
-local make_config = require 'make_config'
+local component = require("badr")
+local make_config = require("make_config")
 
 ---@class badr.button.config : badr.component.config
 ---@field text string?
@@ -59,14 +59,15 @@ local make_config = require 'make_config'
 ---@field mousePressed boolean
 
 --- https://github.com/s-walrus/hex2color/blob/master/hex2color.lua
----@param hex string 
+---@param hex string
 ---@param value integer?
 local function Hex(hex, value)
     return {
         tonumber(string.sub(hex, 2, 3), 16) / 256,
         tonumber(string.sub(hex, 4, 5), 16) / 256,
         tonumber(string.sub(hex, 6, 7), 16) / 256,
-        value or 1 }
+        value or 1,
+    }
 end
 
 ---@param config badr.button.config
@@ -81,7 +82,7 @@ return function(config)
         left = config.leftPadding or 12,
         right = config.rightPadding or 12,
         top = config.topPadding or 8,
-        bottom = config.bottomPadding or 8
+        bottom = config.bottomPadding or 8,
     }
 
     local width = font:getWidth(text) + padding.left + padding.right
@@ -94,15 +95,15 @@ return function(config)
         height = height,
         font = font,
         -- styles
-        backgroundColor = Hex '#DBE2EF',
-        hoverColor = Hex '#3F72AF',
-        textColor = Hex '#112D4E',
+        backgroundColor = Hex("#DBE2EF"),
+        hoverColor = Hex("#3F72AF"),
+        textColor = Hex("#112D4E"),
         cornerRadius = 4,
         leftPadding = padding.left,
         rightPadding = padding.right,
         topPadding = padding.top,
         bottomPadding = padding.bottom,
-        borderColor = Hex "#FFFFFF",
+        borderColor = Hex("#FFFFFF"),
         borderWidth = 0,
         border = false,
         angle = 0,
@@ -113,9 +114,15 @@ return function(config)
         mousePressed = false,
         onUpdate = function(self)
             if love.mouse.isDown(1) then
-                if self.mousePressed == false and self:isMouseInside() and self.parent.visible then
+                if
+                    self.mousePressed == false
+                    and self:isMouseInside()
+                    and self.parent.visible
+                then
                     self.mousePressed = true
-                    if config.onClick then self:onClick() end
+                    if config.onClick then
+                        self:onClick()
+                    end
                 end
             else
                 self.mousePressed = false
@@ -123,7 +130,9 @@ return function(config)
         end,
         --
         onDraw = function(self)
-            if not self.visible then return love.mouse.setCursor() end
+            if not self.visible then
+                return love.mouse.setCursor()
+            end
             love.graphics.push()
             love.graphics.rotate(self.angle)
             love.graphics.scale(self.scale, self.scale)
@@ -132,7 +141,14 @@ return function(config)
             if self.border then
                 love.graphics.setColor(self.borderColor)
                 love.graphics.setLineWidth(self.borderWidth)
-                love.graphics.rectangle('line', self.x, self.y, self.width, self.height, self.cornerRadius)
+                love.graphics.rectangle(
+                    "line",
+                    self.x,
+                    self.y,
+                    self.width,
+                    self.height,
+                    self.cornerRadius
+                )
             end
             --
             love.graphics.setColor(self.backgroundColor)
@@ -142,7 +158,7 @@ return function(config)
                     self:onHover()
                     self.hoverCalled = true
                 end
-                love.mouse.setCursor(love.mouse.getSystemCursor('hand'))
+                love.mouse.setCursor(love.mouse.getSystemCursor("hand"))
                 love.graphics.setColor(self.hoverColor)
                 self.hovered = true
             elseif self.hovered then
@@ -153,13 +169,24 @@ return function(config)
                 self.hovered = false
                 self.hoverCalled = false
             end
-            love.graphics.rectangle('fill', self.x, self.y, self.width, self.height, self.cornerRadius)
+            love.graphics.rectangle(
+                "fill",
+                self.x,
+                self.y,
+                self.width,
+                self.height,
+                self.cornerRadius
+            )
             love.graphics.setColor(self.textColor)
-            love.graphics.printf(self.text, self.x + self.leftPadding, self.y + self.topPadding,
-                self.width - (self.rightPadding + self.leftPadding), 'center')
+            love.graphics.printf(
+                self.text,
+                self.x + self.leftPadding,
+                self.y + self.topPadding,
+                self.width - (self.rightPadding + self.leftPadding),
+                "center"
+            )
             love.graphics.pop()
-        end
-
+        end,
     }
 
     ---@type badr.button

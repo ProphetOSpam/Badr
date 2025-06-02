@@ -1,5 +1,5 @@
-local component = require 'badr'
-local make_config = require 'make_config'
+local component = require("badr")
+local make_config = require("make_config")
 
 ---@class badr.label.config : badr.component.config
 ---@field font love.Font?
@@ -42,11 +42,13 @@ local function label(config)
         font = font,
         color = { 0, 0, 0, 1 },
         onDraw = function(self)
-            if not self.visible then return end
+            if not self.visible then
+                return
+            end
             love.graphics.setFont(self.font)
             love.graphics.setColor(self.color)
             love.graphics.print(self.text, self.x, self.y)
-            love.graphics.setColor({ 1, 1, 1 })
+            love.graphics.setColor { 1, 1, 1 }
         end,
     }
 
